@@ -13,8 +13,8 @@ node('base') {
             sh "oc start-build ${appName} --from-dir=.  --follow --wait -n ${projectName} || true"
             sh "oc new-app ${appName} --name=${appName} -n ${projectName} || true"
             
-            // def commitHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true)
-            // sh "oc tag ${projectName}/${appName}:latest ${projectName}/${appName}:${commitHash}"
+            def commitHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true)
+            sh "oc tag ${projectName}/${appName}:latest ${projectName}/${appName}:${commitHash}"
 
             sh "echo \"successfully build and deploy ${appName} to ${projectName} \" "
         }
